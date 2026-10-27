@@ -1,0 +1,11 @@
+@SkillSync.Api_HostAddress = http://localhost:5156
+
+GET {{SkillSync.Api_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{SkillSync.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

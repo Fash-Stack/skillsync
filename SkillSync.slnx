@@ -1,0 +1,43 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SkillSync.Api/SkillSync.Api.csproj" />
+    <Project Path="src/SkillSync.SharedKernel/SkillSync.SharedKernel.csproj" />
+    <Project Path="src/SkillSync.Worker/SkillSync.Worker.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/" />
+  <Folder Name="/src/Modules/Admin/">
+    <Project Path="src/Modules/Admin/SkillSync.Admin.Contracts/SkillSync.Admin.Contracts.csproj" />
+    <Project Path="src/Modules/Admin/SkillSync.Admin/SkillSync.Admin.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Affiliates/">
+    <Project Path="src/Modules/Affiliates/SkillSync.Affiliates.Contracts/SkillSync.Affiliates.Contracts.csproj" />
+    <Project Path="src/Modules/Affiliates/SkillSync.Affiliates/SkillSync.Affiliates.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/AiAssistant/">
+    <Project Path="src/Modules/AiAssistant/SkillSync.AiAssistant.Contracts/SkillSync.AiAssistant.Contracts.csproj" />
+    <Project Path="src/Modules/AiAssistant/SkillSync.AiAssistant/SkillSync.AiAssistant.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Catalogue/">
+    <Project Path="src/Modules/Catalogue/SkillSync.Catalogue.Contracts/SkillSync.Catalogue.Contracts.csproj" />
+    <Project Path="src/Modules/Catalogue/SkillSync.Catalogue/SkillSync.Catalogue.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Community/">
+    <Project Path="src/Modules/Community/SkillSync.Community.Contracts/SkillSync.Community.Contracts.csproj" />
+    <Project Path="src/Modules/Community/SkillSync.Community/SkillSync.Community.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Identity/">
+    <Project Path="src/Modules/Identity/SkillSync.Identity.Contracts/SkillSync.Identity.Contracts.csproj" />
+    <Project Path="src/Modules/Identity/SkillSync.Identity/SkillSync.Identity.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Learning/">
+    <Project Path="src/Modules/Learning/SkillSync.Learning.Contracts/SkillSync.Learning.Contracts.csproj" />
+    <Project Path="src/Modules/Learning/SkillSync.Learning/SkillSync.Learning.csproj" />
+  </Folder>
+  <Folder Name="/src/Modules/Payments/">
+    <Project Path="src/Modules/Payments/SkillSync.Payments.Contracts/SkillSync.Payments.Contracts.csproj" />
+    <Project Path="src/Modules/Payments/SkillSync.Payments/SkillSync.Payments.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/SkillSync.ArchitectureTests/SkillSync.ArchitectureTests.csproj" />
+  </Folder>
+</Solution>

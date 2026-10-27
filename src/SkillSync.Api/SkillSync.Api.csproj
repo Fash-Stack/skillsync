@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.14" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\Admin\SkillSync.Admin\SkillSync.Admin.csproj" />
+    <ProjectReference Include="..\Modules\Identity\SkillSync.Identity\SkillSync.Identity.csproj" />
+    <ProjectReference Include="..\Modules\Catalogue\SkillSync.Catalogue\SkillSync.Catalogue.csproj" />
+    <ProjectReference Include="..\Modules\Learning\SkillSync.Learning\SkillSync.Learning.csproj" />
+    <ProjectReference Include="..\Modules\Payments\SkillSync.Payments\SkillSync.Payments.csproj" />
+    <ProjectReference Include="..\Modules\Affiliates\SkillSync.Affiliates\SkillSync.Affiliates.csproj" />
+    <ProjectReference Include="..\Modules\Community\SkillSync.Community\SkillSync.Community.csproj" />
+    <ProjectReference Include="..\Modules\AiAssistant\SkillSync.AiAssistant\SkillSync.AiAssistant.csproj" />
+    <ProjectReference Include="..\SkillSync.SharedKernel\SkillSync.SharedKernel.csproj" />
+  </ItemGroup>
+
+</Project>
