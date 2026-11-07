@@ -1,6 +1,6 @@
 ﻿using SkillSync.SharedKernel.Results;
 
-namespace SkillSync.SharedKernel.Messsaging;
+namespace SkillSync.SharedKernel.Messaging;
 
 public interface ICommandHandler<in TCommand>
      where TCommand : ICommand

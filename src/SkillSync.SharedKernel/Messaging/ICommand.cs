@@ -1,4 +1,4 @@
-﻿namespace SkillSync.SharedKernel.Messsaging;
+﻿namespace SkillSync.SharedKernel.Messaging;
 
 public interface ICommand;
 

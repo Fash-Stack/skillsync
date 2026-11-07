@@ -2,9 +2,9 @@
 
 public class Result
 {
-    public Result(bool isSuccess, Error error)
+    public Result(bool isSuccess, DomainError error)
     {
-        if (isSuccess && error != Error.None || !isSuccess && error == Error.None)
+        if (isSuccess && error != DomainError.None || !isSuccess && error == DomainError.None)
         {
             throw new ArgumentException("Invalid error", nameof(error));
         }
@@ -15,12 +15,12 @@ public class Result
 
     public bool IsSuccess { get; }
     public bool IsFailure => !IsSuccess;
-    public Error Error { get; }
+    public DomainError Error { get; }
 
-    public static Result Success() => new(true, Error.None);
+    public static Result Success() => new(true, DomainError.None);
 
-    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
+    public static Result<TValue> Success<TValue>(TValue value) => new(value, true, DomainError.None);
 
-    public static Result Failure(Error error) => new(false, error);
-    public static Result<TValue> Failure<TValue>(Error error) => new(default, false, error);
+    public static Result Failure(DomainError error) => new(false, error);
+    public static Result<TValue> Failure<TValue>(DomainError error) => new(default, false, error);
 }
