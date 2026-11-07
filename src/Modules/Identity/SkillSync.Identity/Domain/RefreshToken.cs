@@ -2,11 +2,6 @@
 
 internal sealed class RefreshToken
 {
-    private RefreshToken()
-    {
-        
-    }
-
     private RefreshToken(
         Guid userId,
         string tokenhash,
