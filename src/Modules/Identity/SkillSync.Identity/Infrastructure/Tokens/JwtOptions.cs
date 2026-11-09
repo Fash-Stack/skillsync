@@ -1,12 +1,12 @@
 ﻿namespace SkillSync.Identity.Infrastructure.Tokens;
 
-internal sealed class JwtOptions
+internal sealed record JwtOptions
 {
-    public string Issuer { get; init; } = string.Empty;
+    public required string Issuer { get; init; }
 
-    public string Audience { get; init; } = string.Empty;
+    public required string Audience { get; init; } 
 
-    public string SecretKey { get; init; } = string.Empty;
+    public required string SecretKey { get; init; } 
 
     public int AccessTokenLifetimeMinutes { get; init; } = 15;
 
