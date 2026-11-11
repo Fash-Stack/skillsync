@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+
 using SkillSync.Identity.Domain;
 using SkillSync.Identity.Infrastructure.Identity;
 using SkillSync.Identity.Infrastructure.Persistence.Configurations;
 
-namespace SkillSync.Identity.Infrastructure;
+namespace SkillSync.Identity.Infrastructure.Persistence;
 
 internal sealed class IdentityDbContext
     : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>

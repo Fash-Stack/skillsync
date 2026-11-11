@@ -1,14 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
-
 using SkillSync.Identity;
+using SkillSync.Identity.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-
-
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -73,6 +71,10 @@ builder.Services.AddIdentityModule(builder.Configuration);
 
 var app = builder.Build();
 
+app.MapIdentityEndpoints();
+
+await app.Services.InitializeAsync();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -80,6 +82,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 

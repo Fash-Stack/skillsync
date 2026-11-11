@@ -28,4 +28,5 @@ public record DomainError
 
     public static DomainError Conflict(string code, string description) => new(code, description, ErrorType.Conflict);
     public static DomainError Problem(string code, string description) => new(code, description, ErrorType.Problem);
+    public static DomainError Validation(string code, string description) => new(code, description, ErrorType.Validation);
 }
