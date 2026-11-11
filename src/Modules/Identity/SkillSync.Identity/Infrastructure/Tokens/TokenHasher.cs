@@ -21,11 +21,23 @@ internal static class TokenHasher
         ArgumentException.ThrowIfNullOrWhiteSpace(token);
         ArgumentException.ThrowIfNullOrWhiteSpace(expectedHash);
 
-        var actualHash = Convert.FromHexString(Hash(token));
-        var expectedHashBytes = Convert.FromHexString(expectedHash);
+        byte[] expectedHashBytes;
 
-        return CryptographicOperations.FixedTimeEquals(
-            actualHash,
-            expectedHashBytes);
+        try
+        {
+            expectedHashBytes = Convert.FromHexString(expectedHash);
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+
+        var actualHash = SHA256.HashData(
+            Encoding.UTF8.GetBytes(token));
+
+        return expectedHashBytes.Length == actualHash.Length &&
+               CryptographicOperations.FixedTimeEquals(
+                   actualHash,
+                   expectedHashBytes);
     }
 }

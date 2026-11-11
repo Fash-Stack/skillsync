@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
 using SkillSync.Identity.Domain;
 using SkillSync.Identity.Infrastructure.Identity;
 using SkillSync.Identity.Infrastructure.Persistence.Configurations;

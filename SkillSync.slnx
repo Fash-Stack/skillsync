@@ -39,5 +39,6 @@
   </Folder>
   <Folder Name="/tests/">
     <Project Path="tests/SkillSync.ArchitectureTests/SkillSync.ArchitectureTests.csproj" />
+    <Project Path="tests/SkillSync.Identity.UnitTests/SkillSync.Identity.UnitTests.csproj" />
   </Folder>
 </Solution>
