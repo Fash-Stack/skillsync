@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 using SkillSync.SharedKernel.Results;
 
 namespace SkillSync.Identity.Application.Register;

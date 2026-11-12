@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+
+using SkillSync.Api.Http;
 using SkillSync.Identity;
-using SkillSync.Identity.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -71,7 +72,7 @@ builder.Services.AddIdentityModule(builder.Configuration);
 
 var app = builder.Build();
 
-app.MapIdentityEndpoints();
+app.MapIdentityEndpoints(new ResultEndpointFilter());
 
 await app.Services.InitializeAsync();
 

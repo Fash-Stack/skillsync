@@ -107,10 +107,12 @@ public static class IdentityModule
     }
 
     public static IEndpointRouteBuilder MapIdentityEndpoints(
-    this IEndpointRouteBuilder endpoints)
+        this IEndpointRouteBuilder endpoints,
+        IEndpointFilter resultFilter)
     {
         ArgumentNullException.ThrowIfNull(endpoints);
+        ArgumentNullException.ThrowIfNull(resultFilter);
 
-        return IdentityEndpoints.MapIdentityEndpoints(endpoints);
+        return IdentityEndpoints.MapIdentityEndpointsInternal(endpoints, resultFilter);
     }
 }
