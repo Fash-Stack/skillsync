@@ -1,14 +1,13 @@
-using System.Text;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 
+using SkillSync.Api.Http;
+using SkillSync.Identity;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
-
-
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -36,6 +35,17 @@ builder.Services.AddSwaggerGen(options =>
         });
 });
 
+var jwtSecretKey = builder.Configuration["Jwt:SecretKey"]
+     ?? throw new InvalidOperationException("JWT signing key is missing.");
+
+var signingKey = Convert.FromBase64String(jwtSecretKey);
+
+if (signingKey.Length < 32)
+{
+    throw new InvalidOperationException(
+        "JWT signing key must contain at least 32 bytes.");
+}
+
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -51,15 +61,20 @@ builder.Services
             
             ValidIssuer = builder.Configuration["Jwt:Issuer"],
             ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SecretKey"]!)),
+            IssuerSigningKey = new SymmetricSecurityKey(signingKey),
             ClockSkew = TimeSpan.Zero
         };
 
     });
 builder.Services.AddAuthorization();
 
+builder.Services.AddIdentityModule(builder.Configuration);
+
 var app = builder.Build();
+
+app.MapIdentityEndpoints(new ResultEndpointFilter());
+
+await app.Services.InitializeAsync();
 
 if (app.Environment.IsDevelopment())
 {
@@ -68,6 +83,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
+app.UseRateLimiter();
 app.UseAuthentication();
 app.UseAuthorization();
 
