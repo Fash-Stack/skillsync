@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SkillSync.Identity.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class AddRefreshTokenFamilyId : Migration
+    internal partial class AddRefreshTokenFamilyId : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
