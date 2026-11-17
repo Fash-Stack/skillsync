@@ -14,6 +14,7 @@ internal static class IdentityEndpoints
             .WithTags("Authentication");
 
         authGroup.MapRegisterEndpoint(resultFilter);
+        authGroup.MapLoginEndpoint(resultFilter);
 
         return authGroup;
     }

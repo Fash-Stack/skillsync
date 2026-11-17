@@ -31,4 +31,8 @@ internal static class IdentityErrors
     public static readonly DomainError RoleRetrievalFailed = DomainError.Failure(
         "Identity.RoleRetrievalFailed",
         "The user's roles could not be retrieved.");
+
+    public static readonly DomainError InvalidRefreshToken = DomainError.Unauthorized(
+        "Identity.InvalidRefreshToken",
+        "The supplied refresh token is invalid or no longer active.");
 }

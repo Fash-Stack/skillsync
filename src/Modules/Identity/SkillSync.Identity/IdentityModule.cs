@@ -1,5 +1,6 @@
 using System.Threading.RateLimiting;
 
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -9,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using SkillSync.Identity.Application.Abstractions;
+using SkillSync.Identity.Application.Common;
+using SkillSync.Identity.Application.Login;
 using SkillSync.Identity.Application.Register;
 using SkillSync.Identity.Endpoints;
 using SkillSync.Identity.Infrastructure.Identity;
@@ -51,7 +54,9 @@ public static class IdentityModule
         services.AddScoped<IdentityRoleSeeder>();
         services.AddScoped<
             ICommandHandler<RegisterCommand, RegisterResponse>, RegisterHandler>();
-
+        services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+        services.AddScoped<ICommandHandler<LoginCommand, AuthTokensResponse>, LoginHandler>();
+        
         services.AddDbContext<IdentityDbContext>(options =>
         {
             options.UseNpgsql(connectionString);

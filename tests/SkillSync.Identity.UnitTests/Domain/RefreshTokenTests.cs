@@ -9,6 +9,7 @@ public class RefreshTokenTests
     {
         // Arrange
         var userId = Guid.NewGuid();
+        var familyId = Guid.NewGuid();
         var tokenHash = "ABC123";
         var createdAt = new DateTimeOffset(
             2026, 11, 10, 10, 0, 0, TimeSpan.Zero);
@@ -16,7 +17,7 @@ public class RefreshTokenTests
         var expiresAtUtc = createdAt.AddDays(30);
 
         // Act
-        var refreshToken = RefreshToken.Create(userId, tokenHash, createdAt, expiresAtUtc);
+        var refreshToken = RefreshToken.Create(userId, familyId, tokenHash, createdAt, expiresAtUtc);
 
         // Assert
         Assert.Equal(userId, refreshToken.UserId);
@@ -32,6 +33,7 @@ public class RefreshTokenTests
     public void Create_WithEmptyUserId_ThrowsArgumentException()
     {
         // Arrange
+        var familyId = Guid.NewGuid();
         var tokenHash = "ABC123";
         var createdAtUtc = new DateTimeOffset(
             2026, 11, 10, 10, 0, 0, TimeSpan.Zero);
@@ -42,6 +44,7 @@ public class RefreshTokenTests
         Assert.Throws<ArgumentException>(() =>
             RefreshToken.Create(
                 Guid.Empty,
+                familyId,
                 tokenHash,
                 createdAtUtc,
                 expiresAtUtc));
@@ -53,6 +56,7 @@ public class RefreshTokenTests
     {
         // Arrange
         var userId = Guid.NewGuid();
+        var familyId = Guid.NewGuid();
         var tokenHash = string.Empty;
 
         var createdAtUtc = new DateTimeOffset(
@@ -64,6 +68,7 @@ public class RefreshTokenTests
         Assert.Throws<ArgumentException>(() =>
             RefreshToken.Create(
                 userId,
+                familyId,
                 tokenHash,
                 createdAtUtc,
                 expiresAtUtc));
@@ -75,6 +80,7 @@ public class RefreshTokenTests
     {
         // Arrange
         var userId = Guid.NewGuid();
+        var familyId = Guid.NewGuid();
         var tokenHash = "   ";
 
         var createdAtUtc = new DateTimeOffset(
@@ -86,6 +92,7 @@ public class RefreshTokenTests
         Assert.Throws<ArgumentException>(() =>
             RefreshToken.Create(
                 userId,
+                familyId,
                 tokenHash,
                 createdAtUtc,
                 expiresAtUtc));
@@ -96,6 +103,7 @@ public class RefreshTokenTests
     {
         // Arrange
         var userId = Guid.NewGuid();
+        var familyId = Guid.NewGuid();
         var tokenHash = "ABC123";
 
         var createdAtUtc = new DateTimeOffset(
@@ -107,6 +115,7 @@ public class RefreshTokenTests
         Assert.Throws<ArgumentException>(() =>
             RefreshToken.Create(
                 userId,
+                familyId,
                 tokenHash,
                 createdAtUtc,
                 expiresAtUtc));
@@ -117,6 +126,7 @@ public class RefreshTokenTests
     {
         // Arrange
         var userId = Guid.NewGuid();
+        var familyId = Guid.NewGuid();
         var tokenHash = "ABC123";
 
         var createdAtUtc = new DateTimeOffset(
@@ -128,6 +138,7 @@ public class RefreshTokenTests
         Assert.Throws<ArgumentException>(() =>
             RefreshToken.Create(
                 userId,
+                familyId,
                 tokenHash,
                 createdAtUtc,
                 expiresAtUtc));
@@ -143,6 +154,7 @@ public class RefreshTokenTests
         var expiresAtUtc = createdAtUtc.AddDays(30);
 
         var refreshToken = RefreshToken.Create(
+            Guid.NewGuid(),
             Guid.NewGuid(),
             "ABC123",
             createdAtUtc,
@@ -167,6 +179,7 @@ public class RefreshTokenTests
 
         var refreshToken = RefreshToken.Create(
             Guid.NewGuid(),
+            Guid.NewGuid(),
             "ABC123",
             createdAtUtc,
             expiresAtUtc);
@@ -190,6 +203,7 @@ public class RefreshTokenTests
 
         var refreshToken = RefreshToken.Create(
             Guid.NewGuid(),
+            Guid.NewGuid(),
             "ABC123",
             createdAtUtc,
             expiresAtUtc);
@@ -212,6 +226,7 @@ public class RefreshTokenTests
         var nowUtc = createdAtUtc.AddDays(5);
 
         var refreshToken = RefreshToken.Create(
+            Guid.NewGuid(),
             Guid.NewGuid(),
             "ABC123",
             createdAtUtc,
@@ -239,6 +254,7 @@ public class RefreshTokenTests
 
         var refreshToken = RefreshToken.Create(
             Guid.NewGuid(),
+            Guid.NewGuid(),
             "ABC123",
             createdAtUtc,
             expiresAtUtc);
@@ -264,6 +280,7 @@ public class RefreshTokenTests
         var secondRevocationTime = createdAtUtc.AddDays(6);
 
         var refreshToken = RefreshToken.Create(
+            Guid.NewGuid(),
             Guid.NewGuid(),
             "ABC123",
             createdAtUtc,

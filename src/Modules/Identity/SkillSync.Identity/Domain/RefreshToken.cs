@@ -19,6 +19,8 @@ internal sealed class RefreshToken
 
     public Guid UserId { get; private set; }
 
+    public Guid FamilyId { get; private set; }
+
     public string TokenHash { get; private set; }
 
     public DateTimeOffset CreatedAtUtc { get; private set; }
@@ -39,6 +41,7 @@ internal sealed class RefreshToken
 
     public static RefreshToken Create(
         Guid userId,
+        Guid familyId,
         string tokenHash,
         DateTimeOffset createdAtUtc,
         DateTimeOffset expiresAtUtc)
@@ -50,6 +53,11 @@ internal sealed class RefreshToken
         if (string.IsNullOrWhiteSpace(tokenHash))
             throw new ArgumentException(
                 "Token hash is required.", nameof(tokenHash));
+
+        if (familyId == Guid.Empty)
+            throw new ArgumentException(
+                "Token family ID cannot be empty.",
+                nameof(familyId));
 
         createdAtUtc = createdAtUtc.ToUniversalTime();
         expiresAtUtc = expiresAtUtc.ToUniversalTime();

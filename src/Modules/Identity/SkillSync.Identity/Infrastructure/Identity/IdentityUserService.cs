@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 using SkillSync.Identity.Application.Abstractions;
 using SkillSync.Identity.Domain;
+using SkillSync.Identity.Infrastructure.Persistence;
 using SkillSync.SharedKernel.Results;
 
 namespace SkillSync.Identity.Infrastructure.Identity;
