@@ -15,6 +15,13 @@ internal sealed class RefreshTokenHandler(
         RefreshTokenCommand refreshTokenCommand,
         CancellationToken cancellationToken)
     {
+        var validationResult = RefreshTokenValidator.Validate(refreshTokenCommand);
+
+        if (validationResult.IsFailure)
+        {
+            return Result.Failure<AuthTokensResponse>(validationResult.Error);
+        }
+
         var rotationResult = await refreshTokenService.RotateAsync(refreshTokenCommand.RefreshToken, cancellationToken);
 
         if (rotationResult.IsFailure)

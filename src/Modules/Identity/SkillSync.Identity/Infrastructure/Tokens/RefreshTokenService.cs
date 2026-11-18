@@ -123,6 +123,27 @@ internal sealed class RefreshTokenService(
                 ));
     }
 
+    public async Task RevokeAsync(string rawToken, CancellationToken cancellationToken)
+    {
+        cancellationToken.ThrowIfCancellationRequested();
+
+        if (string.IsNullOrWhiteSpace(rawToken))
+            return;
+
+        var tokenHash = TokenHasher.Hash(rawToken);
+
+        var existingToken = await dbContext.RefreshTokens
+            .SingleOrDefaultAsync(
+            token => token.TokenHash == tokenHash, cancellationToken);
+
+        if (existingToken is null || !existingToken.IsActive(DateTimeOffset.UtcNow))
+            return;
+
+        existingToken.Revoke(DateTimeOffset.UtcNow);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
+    }
+
     private static string GenerateRawToken()
     {
         var randomBytes = RandomNumberGenerator.GetBytes(64);

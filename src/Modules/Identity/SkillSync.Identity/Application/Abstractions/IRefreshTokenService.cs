@@ -7,4 +7,5 @@ internal interface IRefreshTokenService
 {
     Task<string> CreateAsync(Guid userId, CancellationToken cancellationToken);
     Task<Result<RotatedRefreshToken>> RotateAsync(string rawToken, CancellationToken cancellationToken);
+    Task RevokeAsync(string rawToken, CancellationToken cancellationToken);
 }
