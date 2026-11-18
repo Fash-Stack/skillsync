@@ -3,21 +3,26 @@
 internal sealed class RefreshToken
 {
     private RefreshToken(
-        Guid userId,
-        string tokenhash,
-        DateTimeOffset createdAtUtc,
-        DateTimeOffset expiresAtUtc)
+    Guid userId,
+    string tokenHash,
+    DateTimeOffset createdAtUtc,
+    DateTimeOffset expiresAtUtc)
     {
         Id = Guid.NewGuid();
         UserId = userId;
-        TokenHash = tokenhash;
+        TokenHash = tokenHash;
         CreatedAtUtc = createdAtUtc;
         ExpiresAtUtc = expiresAtUtc;
     }
 
-    public Guid Id { get; set; }
-    public Guid UserId { get; set; }
-    public string TokenHash { get; set; }
+    public Guid Id { get; private set; }
+
+    public Guid UserId { get; private set; }
+
+    public Guid FamilyId { get; private set; }
+
+    public string TokenHash { get; private set; }
+
     public DateTimeOffset CreatedAtUtc { get; private set; }
 
     public DateTimeOffset ExpiresAtUtc { get; private set; }
@@ -36,18 +41,30 @@ internal sealed class RefreshToken
 
     public static RefreshToken Create(
         Guid userId,
+        Guid familyId,
         string tokenHash,
         DateTimeOffset createdAtUtc,
         DateTimeOffset expiresAtUtc)
     {
         if (userId == Guid.Empty)
-            throw new ArgumentException("User ID cannot be empty.", nameof(userId));
+            throw new ArgumentException(
+                "User ID cannot be empty.", nameof(userId));
 
         if (string.IsNullOrWhiteSpace(tokenHash))
-            throw new ArgumentException("Token hash is required.", nameof(tokenHash));
+            throw new ArgumentException(
+                "Token hash is required.", nameof(tokenHash));
+
+        if (familyId == Guid.Empty)
+            throw new ArgumentException(
+                "Token family ID cannot be empty.",
+                nameof(familyId));
+
+        createdAtUtc = createdAtUtc.ToUniversalTime();
+        expiresAtUtc = expiresAtUtc.ToUniversalTime();
 
         if (expiresAtUtc <= createdAtUtc)
-            throw new ArgumentException("Expiry must be after creation.");
+            throw new ArgumentException(
+                "Expiry must be after creation.");
 
         return new RefreshToken(
             userId,
@@ -61,7 +78,21 @@ internal sealed class RefreshToken
         string? replacedByTokenHash = null)
     {
         if (IsRevoked)
-            throw new InvalidOperationException("Token has already been revoked.");
+            throw new InvalidOperationException(
+                "Token has already been revoked.");
+
+        revokedAtUtc = revokedAtUtc.ToUniversalTime();
+
+        if (revokedAtUtc < CreatedAtUtc)
+            throw new ArgumentException(
+                "Revocation time cannot be before creation time.",
+                nameof(revokedAtUtc));
+
+        if (replacedByTokenHash is not null &&
+            string.IsNullOrWhiteSpace(replacedByTokenHash))
+            throw new ArgumentException(
+                "Replacement token hash cannot be empty.",
+                nameof(replacedByTokenHash));
 
         RevokedAtUtc = revokedAtUtc;
         ReplacedByTokenHash = replacedByTokenHash;

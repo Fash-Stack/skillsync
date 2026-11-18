@@ -2,7 +2,7 @@
 
 namespace SkillSync.SharedKernel.Results;
 
-public class Result<TValue> : Result
+public class Result<TValue> : Result , IValueResult
 {
     private readonly TValue? _value;
 
@@ -13,6 +13,8 @@ public class Result<TValue> : Result
 
     [NotNull]
     public TValue Value => IsSuccess ? _value! : throw new InvalidOperationException("The value of a failure result can't be accessed");
+
+    object? IValueResult.Value => Value;
 
     public static implicit operator Result<TValue>(TValue? value) => value is not null ? Success(value) : Failure<TValue>(DomainError.NullValue);
 
