@@ -1,6 +1,5 @@
 using System.Threading.RateLimiting;
 
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -15,9 +14,11 @@ using SkillSync.Identity.Application.Login;
 using SkillSync.Identity.Application.Logout;
 using SkillSync.Identity.Application.RefreshToken;
 using SkillSync.Identity.Application.Register;
+using SkillSync.Identity.Contracts;
 using SkillSync.Identity.Endpoints;
 using SkillSync.Identity.Infrastructure.Identity;
 using SkillSync.Identity.Infrastructure.Persistence;
+using SkillSync.Identity.Infrastructure.PublicApi;
 using SkillSync.Identity.Infrastructure.Tokens;
 using SkillSync.SharedKernel.Messaging;
 
@@ -60,6 +61,7 @@ public static class IdentityModule
         services.AddScoped<ICommandHandler<LoginCommand, AuthTokensResponse>, LoginHandler>();
         services.AddScoped<ICommandHandler<RefreshTokenCommand, AuthTokensResponse>, RefreshTokenHandler>();
         services.AddScoped<ICommandHandler<LogoutCommand>, LogoutHandler>();
+        services.AddScoped<IIdentityApi, IdentityApi>();
 
         services.AddDbContext<IdentityDbContext>(options =>
         {
