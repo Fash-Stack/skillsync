@@ -79,13 +79,21 @@ internal sealed class RefreshTokenService(
                 }
 
                 await dbContext.SaveChangesAsync(cancellationToken);
+                await transaction.CommitAsync(cancellationToken);
             }
 
             return Result.Failure<RotatedRefreshToken>(IdentityErrors.InvalidRefreshToken);
         }
 
+        if (existingToken.IsExpired(nowUtc))
+        {
+            return Result.Failure<RotatedRefreshToken>(IdentityErrors.InvalidRefreshToken);
+        }
+
         var replacementRawToken = GenerateRawToken();
         var replacementHash = TokenHasher.Hash(replacementRawToken);
+
+        existingToken.Revoke(nowUtc, replacementHash);
 
         var replacementToken = RefreshToken.Create(
             existingToken.UserId,
@@ -111,7 +119,7 @@ internal sealed class RefreshTokenService(
         return Result.Success(
             new RotatedRefreshToken(
                 existingToken.UserId,
-                replacementHash
+                replacementRawToken
                 ));
     }
 

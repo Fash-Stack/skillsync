@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SkillSync.Identity.Application.Abstractions;
 using SkillSync.Identity.Application.Common;
 using SkillSync.Identity.Application.Login;
+using SkillSync.Identity.Application.RefreshToken;
 using SkillSync.Identity.Application.Register;
 using SkillSync.Identity.Endpoints;
 using SkillSync.Identity.Infrastructure.Identity;
@@ -56,7 +57,8 @@ public static class IdentityModule
             ICommandHandler<RegisterCommand, RegisterResponse>, RegisterHandler>();
         services.AddScoped<IRefreshTokenService, RefreshTokenService>();
         services.AddScoped<ICommandHandler<LoginCommand, AuthTokensResponse>, LoginHandler>();
-        
+        services.AddScoped<ICommandHandler<RefreshTokenCommand, AuthTokensResponse>, RefreshTokenHandler>();
+
         services.AddDbContext<IdentityDbContext>(options =>
         {
             options.UseNpgsql(connectionString);
