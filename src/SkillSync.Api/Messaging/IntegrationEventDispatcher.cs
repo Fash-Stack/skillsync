@@ -12,7 +12,7 @@ internal sealed class IntegrationEventDispatcher(
 
         cancellationToken.ThrowIfCancellationRequested();
 
-        var handlerType = typeof(IIntegrationEventHandler<>)
+        var handlerType = typeof(IIntegrationEventConsumer<>)
             .MakeGenericType(integrationEvent.GetType());
 
         var handlers = serviceProvider.GetServices(handlerType);
@@ -22,7 +22,7 @@ internal sealed class IntegrationEventDispatcher(
             cancellationToken.ThrowIfCancellationRequested();
 
             var handleMethod = handlerType.GetMethod(nameof
-                (IIntegrationEventHandler<IIntegrationEvent>.Handle));
+                (IIntegrationEventConsumer<IIntegrationEvent>.Handle));
 
             if (handleMethod is null)
                 throw new InvalidOperationException($"Handler method was not found for {handlerType.Name}");
