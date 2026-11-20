@@ -3,6 +3,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 
 using SkillSync.Api.Http;
+using SkillSync.Api.Messaging;
 using SkillSync.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +67,9 @@ builder.Services
         };
 
     });
+
+builder.Services.AddIntegrationEventMessaging();
+
 builder.Services.AddAuthorization();
 
 builder.Services.AddIdentityModule(builder.Configuration);

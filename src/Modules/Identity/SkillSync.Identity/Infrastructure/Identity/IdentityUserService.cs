@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Text.Json;
+
+using Microsoft.AspNetCore.Identity;
 
 using SkillSync.Identity.Application.Abstractions;
+using SkillSync.Identity.Contracts.Events;
 using SkillSync.Identity.Domain;
+using SkillSync.Identity.Infrastructure.Outbox;
 using SkillSync.Identity.Infrastructure.Persistence;
 using SkillSync.SharedKernel.Results;
 
@@ -53,6 +57,20 @@ internal sealed class IdentityUserService(
 
             return Result.Failure<Guid>(IdentityErrors.RoleAssignmentFailed);
         }
+
+        var integrationEvent= new UserRegisteredIntegrationEvent(
+            user.Id,
+            user.Email,
+            DateTimeOffset.UtcNow);
+
+        var outboxMessage = OutboxMessage.Create(
+            typeof(UserRegisteredIntegrationEvent).FullName!,
+            JsonSerializer.Serialize(integrationEvent),
+            integrationEvent.OccuredOnUtc);
+
+        dbContext.OutboxMessages.Add(outboxMessage);
+
+        await dbContext.SaveChangesAsync(cancellationToken);
 
         await transaction.CommitAsync(cancellationToken);
 

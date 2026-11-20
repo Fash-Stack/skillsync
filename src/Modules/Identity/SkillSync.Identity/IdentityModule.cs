@@ -17,6 +17,7 @@ using SkillSync.Identity.Application.Register;
 using SkillSync.Identity.Contracts;
 using SkillSync.Identity.Endpoints;
 using SkillSync.Identity.Infrastructure.Identity;
+using SkillSync.Identity.Infrastructure.Outbox;
 using SkillSync.Identity.Infrastructure.Persistence;
 using SkillSync.Identity.Infrastructure.PublicApi;
 using SkillSync.Identity.Infrastructure.Tokens;
@@ -62,6 +63,7 @@ public static class IdentityModule
         services.AddScoped<ICommandHandler<RefreshTokenCommand, AuthTokensResponse>, RefreshTokenHandler>();
         services.AddScoped<ICommandHandler<LogoutCommand>, LogoutHandler>();
         services.AddScoped<IIdentityApi, IdentityApi>();
+        services.AddScoped<OutboxProcessor>();
 
         services.AddDbContext<IdentityDbContext>(options =>
         {
