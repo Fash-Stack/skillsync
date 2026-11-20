@@ -10,6 +10,8 @@ internal sealed record JwtOptions
 
     public int AccessTokenLifetimeMinutes { get; init; } = 15;
 
+    public int RefreshTokenLifeTimeInDays { get; init; } = 7;
+
     public byte[] GetSigningKey()
     {
         if (string.IsNullOrWhiteSpace(SecretKey))
@@ -46,6 +48,10 @@ internal sealed record JwtOptions
         if (AccessTokenLifetimeMinutes <= 0)
             throw new InvalidOperationException(
                 "Access token lifetime must be greater than zero.");
+
+        if (RefreshTokenLifeTimeInDays <= 0)
+            throw new InvalidOperationException(
+                "Refresh token lifetime must be greater than zero.");
 
         _ = GetSigningKey();
     }
