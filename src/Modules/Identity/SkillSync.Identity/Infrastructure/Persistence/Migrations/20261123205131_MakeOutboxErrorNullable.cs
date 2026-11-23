@@ -5,7 +5,7 @@
 namespace SkillSync.Identity.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class MakeOutboxErrorNullable : Migration
+    internal partial class MakeOutboxErrorNullable : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
