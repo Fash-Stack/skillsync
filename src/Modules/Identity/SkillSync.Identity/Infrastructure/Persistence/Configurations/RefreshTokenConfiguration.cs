@@ -15,6 +15,14 @@ internal sealed class RefreshTokenConfiguration
 
         builder.HasKey(token => token.Id);
 
+        builder.Property(token => token.FamilyId)
+            .IsRequired();
+
+        builder.HasIndex(token => token.FamilyId);
+
+        builder.Property(token => token.RevokedAtUtc)
+            .IsConcurrencyToken();
+
         builder.Property(token => token.TokenHash)
             .IsRequired()
             .HasMaxLength(128);

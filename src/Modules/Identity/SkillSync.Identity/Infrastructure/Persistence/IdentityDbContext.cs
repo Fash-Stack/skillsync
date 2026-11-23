@@ -4,9 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 using SkillSync.Identity.Domain;
 using SkillSync.Identity.Infrastructure.Identity;
+using SkillSync.Identity.Infrastructure.Outbox;
 using SkillSync.Identity.Infrastructure.Persistence.Configurations;
 
-namespace SkillSync.Identity.Infrastructure;
+namespace SkillSync.Identity.Infrastructure.Persistence;
 
 internal sealed class IdentityDbContext
     : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
@@ -18,6 +19,7 @@ internal sealed class IdentityDbContext
     }
 
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public DbSet<OutboxMessage> OutboxMessages => Set<OutboxMessage>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -27,5 +29,6 @@ internal sealed class IdentityDbContext
 
         modelBuilder.ApplyConfiguration(
             new RefreshTokenConfiguration());
+        modelBuilder.ApplyConfiguration(new OutboxMessageConfiguration());
     }
 }
