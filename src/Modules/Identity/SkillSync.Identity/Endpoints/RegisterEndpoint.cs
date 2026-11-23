@@ -26,7 +26,7 @@ internal static class RegisterEndpoint
 
         return group;
     }
-    private static async Task<IResult> RegisterAsync(
+    private static async Task<Result<RegisterResponse>> RegisterAsync(
         [FromBody] RegisterRequest request,
         ICommandHandler<RegisterCommand, RegisterResponse> handler,
         CancellationToken cancellationToken)
@@ -35,7 +35,7 @@ internal static class RegisterEndpoint
             request.Email,
             request.Password);
 
-        return (IResult)await handler.Handle(command, cancellationToken);
+        return await handler.Handle(command, cancellationToken);
     }
 }
 

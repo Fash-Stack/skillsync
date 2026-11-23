@@ -7,7 +7,7 @@ internal sealed class OutboxMessage
     public string Content { get; private set; } = null!;
     public DateTimeOffset OccuredAtUtc { get; private set; }
     public DateTimeOffset? ProcessedOnUtc { get; private set; }
-    public string Error { get; private set; } = null!;
+    public string? Error { get; private set; } 
 
     private OutboxMessage() 
     {
@@ -33,7 +33,7 @@ internal sealed class OutboxMessage
             throw new InvalidOperationException("Outbox message has already been processed");
 
         ProcessedOnUtc = processedOnUtc.ToUniversalTime();
-        Error = null!;
+        Error = null;
     }
 
     public void MarkAsFailed(string error)

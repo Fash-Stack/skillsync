@@ -272,7 +272,6 @@ namespace SkillSync.Identity.Infrastructure.Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Error")
-                        .IsRequired()
                         .HasMaxLength(4000)
                         .HasColumnType("character varying(4000)");
 

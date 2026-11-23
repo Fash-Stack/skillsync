@@ -4,12 +4,14 @@ internal sealed class RefreshToken
 {
     private RefreshToken(
     Guid userId,
+    Guid familyId,
     string tokenHash,
     DateTimeOffset createdAtUtc,
     DateTimeOffset expiresAtUtc)
     {
         Id = Guid.NewGuid();
         UserId = userId;
+        FamilyId = familyId;
         TokenHash = tokenHash;
         CreatedAtUtc = createdAtUtc;
         ExpiresAtUtc = expiresAtUtc;
@@ -68,6 +70,7 @@ internal sealed class RefreshToken
 
         return new RefreshToken(
             userId,
+            familyId,
             tokenHash,
             createdAtUtc,
             expiresAtUtc);
