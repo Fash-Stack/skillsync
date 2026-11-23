@@ -63,7 +63,7 @@ public static class IdentityModule
         services.AddScoped<ICommandHandler<RefreshTokenCommand, AuthTokensResponse>, RefreshTokenHandler>();
         services.AddScoped<ICommandHandler<LogoutCommand>, LogoutHandler>();
         services.AddScoped<IIdentityApi, IdentityApi>();
-        services.AddScoped<OutboxProcessor>();
+        services.AddScoped<IOutboxProcessor, OutboxProcessor>();
 
         services.AddDbContext<IdentityDbContext>(options =>
         {

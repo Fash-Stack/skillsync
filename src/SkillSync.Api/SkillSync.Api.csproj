@@ -28,6 +28,7 @@
     <ProjectReference Include="..\Modules\Community\SkillSync.Community\SkillSync.Community.csproj" />
     <ProjectReference Include="..\Modules\AiAssistant\SkillSync.AiAssistant\SkillSync.AiAssistant.csproj" />
     <ProjectReference Include="..\SkillSync.SharedKernel\SkillSync.SharedKernel.csproj" />
+    <ProjectReference Include="..\SkillSync.Worker\SkillSync.Worker.csproj" />
   </ItemGroup>
 
 </Project>

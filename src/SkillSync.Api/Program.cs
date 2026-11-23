@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
+using SkillSync.Worker;
 
 using SkillSync.Api.Http;
-using SkillSync.Api.Messaging;
 using SkillSync.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -68,11 +68,10 @@ builder.Services
 
     });
 
-builder.Services.AddIntegrationEventMessaging();
-
 builder.Services.AddAuthorization();
 
 builder.Services.AddIdentityModule(builder.Configuration);
+builder.Services.AddSkillSyncWorker();
 
 var app = builder.Build();
 

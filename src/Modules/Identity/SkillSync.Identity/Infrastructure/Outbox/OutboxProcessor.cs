@@ -1,29 +1,22 @@
 ﻿using System.Text.Json;
+using SkillSync.SharedKernel.Messaging;
 
 using Microsoft.EntityFrameworkCore;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using SkillSync.Identity.Contracts.Events;
 using SkillSync.Identity.Infrastructure.Persistence;
-using SkillSync.SharedKernel.Messaging;
 
 namespace SkillSync.Identity.Infrastructure.Outbox;
 
 internal sealed partial class OutboxProcessor(
-    IServiceScopeFactory scopeFactory,
-    ILogger<OutboxProcessor> logger)
+    IdentityDbContext dbContext,
+    IIntegrationEventDispatcher dispatcher,
+    ILogger<OutboxProcessor> logger) : IOutboxProcessor
 {
     public async Task ProcessAsync(CancellationToken cancellationToken)
     {
-        await using var scope = scopeFactory.CreateAsyncScope();
-
-        var dbContext = scope.ServiceProvider.GetRequiredService<IdentityDbContext>();
-
-        var dispatcher = scope.ServiceProvider
-            .GetRequiredService<IIntegrationEventDispatcher>();
-
         var messages = await dbContext.OutboxMessages
             .Where(messages => messages.ProcessedOnUtc == null)
             .OrderBy(messages => messages.OccuredAtUtc)
@@ -37,8 +30,10 @@ internal sealed partial class OutboxProcessor(
                 cancellationToken.ThrowIfCancellationRequested();
 
                 if (message.Type != typeof(UserRegisteredIntegrationEvent).FullName)
-                    continue;
-
+                {
+                    throw new InvalidOperationException($"Unsupported outbox message type: {message.Type}");
+                }
+                    
                 var integrationEvent = JsonSerializer.Deserialize<UserRegisteredIntegrationEvent>(message.Content)
                     ?? throw new InvalidOperationException("Could not deserialize user registration event.");
 

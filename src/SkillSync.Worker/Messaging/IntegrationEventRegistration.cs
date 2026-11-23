@@ -1,4 +1,5 @@
 ﻿using SkillSync.SharedKernel.Messaging;
+using SkillSync.Worker.Messaging;
 
 namespace SkillSync.Api.Messaging;
 

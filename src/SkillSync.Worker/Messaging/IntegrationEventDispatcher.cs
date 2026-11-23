@@ -1,6 +1,6 @@
 ﻿using SkillSync.SharedKernel.Messaging;
 
-namespace SkillSync.Api.Messaging;
+namespace SkillSync.Worker.Messaging;
 
 internal sealed class IntegrationEventDispatcher(
     IServiceProvider serviceProvider)
